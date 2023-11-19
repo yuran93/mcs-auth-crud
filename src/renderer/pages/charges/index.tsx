@@ -16,6 +16,7 @@ import {
 import { ActionButton, DestroyButton, NavigationButton } from "@/components/customs/buttons"
 import { ConfirmDestroy } from "@/components/customs/confirm-destroy"
 import { Pagination } from "@/components/customs/pagination"
+import { toDateString } from "@/lib/utils"
 
 export default function ChargesIndexPage() {
   const [page, setPage] = useState(1)
@@ -72,16 +73,20 @@ export default function ChargesIndexPage() {
         <Table className="mt-5">
           <TableHead>
             <TableRow>
+              <TableHeaderCell>Date</TableHeaderCell>
               <TableHeaderCell>Name</TableHeaderCell>
               <TableHeaderCell>Amount</TableHeaderCell>
+              <TableHeaderCell>Type</TableHeaderCell>
               <TableHeaderCell className="w-0"></TableHeaderCell>
             </TableRow>
           </TableHead>
           <TableBody>
             {charges.map((charge) => (
               <TableRow key={charge.dataValues.id}>
+                <TableCell>{toDateString(charge.dataValues.date)}</TableCell>
                 <TableCell>{charge.dataValues.name}</TableCell>
                 <TableCell>{charge.dataValues.amount}</TableCell>
+                <TableCell>{charge.dataValues.type}</TableCell>
                 <TableCell className="flex gap-3">
                   <ActionButton url={`/charges/${charge.dataValues.id}/edit`} icon={Pencil1Icon} />
                   <DestroyButton onClick={() => confirmDestroy(charge.dataValues.id)} />
