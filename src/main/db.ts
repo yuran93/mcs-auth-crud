@@ -18,7 +18,15 @@ export const User = sequelize.define('User', {
   email: DataTypes.STRING,
   password: DataTypes.STRING,
   contact: DataTypes.STRING,
+  upiId: DataTypes.STRING,
   type: DataTypes.STRING,
+})
+
+export const Charge = sequelize.define('Charge', {
+  name: DataTypes.STRING,
+  type: DataTypes.STRING,
+  amount: DataTypes.NUMBER,
+  date: DataTypes.DATE,
 })
 
 async function createAdminUser() {
@@ -27,11 +35,14 @@ async function createAdminUser() {
     email: 'admin@admin.com',
     password: 'password',
     contact: '0000000',
+    upiId: '',
     type: 'admin',
   }
 
   try {
-    const result = await User.findOne({ where: data })
+    const result = await User.findOne({ where: {
+      email: data.email,
+    } })
 
     if (!result) {
       await User.create(data)
@@ -43,6 +54,7 @@ async function createAdminUser() {
 
 export async function syncTables() {
   await User.sync()
+  await Charge.sync()
 
   await createAdminUser()
 }
@@ -56,14 +68,21 @@ export function getModel(key: string) {
   if (key === 'User') {
     return User
   }
+  if (key === 'Charge') {
+    return Charge
+  }
 
   throw new Error("Model not found.")
 }
 
-ipcMain.handle('db-find-all', async (event, model): Promise<DBResponse> => {
+ipcMain.handle('db-find-all', async (event, model, options = {}, page = 1, perPage = 10): Promise<DBResponse> => {
   try {
     return {
-      response: await getModel(model).findAll(),
+      response: await getModel(model).findAll({
+        ...options,
+        offset: ((page - 1) * perPage),
+        limit: perPage,
+      }),
       success: true,
     }
   } catch (error) {

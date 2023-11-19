@@ -1,9 +1,9 @@
 import { toast } from "sonner"
 
 export function useDatabase() {
-  const findAll = async (modal: string) => {
+  const findAll = async (modal: string, options = {}, page = 1, perPage = 10) => {
     const { response, success } = await window.electron.ipcRenderer
-      .invoke('db-find-all', modal)
+      .invoke('db-find-all', modal, options, page, perPage)
 
     if (success) {
       return response

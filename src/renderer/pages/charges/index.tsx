@@ -17,18 +17,18 @@ import { ActionButton, DestroyButton, NavigationButton } from "@/components/cust
 import { ConfirmDestroy } from "@/components/customs/confirm-destroy"
 import { Pagination } from "@/components/customs/pagination"
 
-export default function UsersIndexPage() {
-  const { findAll, destroy } = useDatabase()
+export default function ChargesIndexPage() {
   const [page, setPage] = useState(1)
-  const [users, setUsers] = useState([])
+  const { findAll, destroy } = useDatabase()
+  const [charges, setCharges] = useState([])
   const [openDestroy, setOpenDestroy] = useState(false)
   const [selectedId, setSelectedId] = useState(null)
 
   const populateRecords = async () => {
-    const data = await findAll('User', {}, page)
+    const data = await findAll('Charge')
 
     if (data) {
-      setUsers(data)
+      setCharges(data)
     }
   }
 
@@ -44,7 +44,7 @@ export default function UsersIndexPage() {
 
   const proceedDestroy = async () => {
     if (selectedId) {
-      const response = await destroy('User', selectedId)
+      const response = await destroy('Charge', selectedId)
       if (response) {
         toast.success('Successfully deleted the record')
         await populateRecords()
@@ -59,7 +59,7 @@ export default function UsersIndexPage() {
   return (
     <AuthLayout>
       <div className="flex justify-end pb-6">
-        <NavigationButton label="Create" url="/users/create" icon={FileIcon} />
+        <NavigationButton label="Create" url="/charges/create" icon={FileIcon} />
       </div>
       <ConfirmDestroy
         open={openDestroy}
@@ -68,27 +68,23 @@ export default function UsersIndexPage() {
         onConfirm={proceedDestroy}
       />
       <Card>
-        <Title>Manage Users</Title>
+        <Title>Manage Charges</Title>
         <Table className="mt-5">
           <TableHead>
             <TableRow>
               <TableHeaderCell>Name</TableHeaderCell>
-              <TableHeaderCell>Email</TableHeaderCell>
-              <TableHeaderCell>Contact</TableHeaderCell>
-              <TableHeaderCell>Status</TableHeaderCell>
+              <TableHeaderCell>Amount</TableHeaderCell>
               <TableHeaderCell className="w-0"></TableHeaderCell>
             </TableRow>
           </TableHead>
           <TableBody>
-            {users.map((user) => (
-              <TableRow key={user.dataValues.id}>
-                <TableCell>{user.dataValues.name}</TableCell>
-                <TableCell>{user.dataValues.email}</TableCell>
-                <TableCell>{user.dataValues.contact}</TableCell>
-                <TableCell>{user.dataValues.type}</TableCell>
+            {charges.map((charge) => (
+              <TableRow key={charge.dataValues.id}>
+                <TableCell>{charge.dataValues.name}</TableCell>
+                <TableCell>{charge.dataValues.amount}</TableCell>
                 <TableCell className="flex gap-3">
-                  <ActionButton url={`/users/${user.dataValues.id}/edit`} icon={Pencil1Icon} />
-                  <DestroyButton onClick={() => confirmDestroy(user.dataValues.id)} />
+                  <ActionButton url={`/charges/${charge.dataValues.id}/edit`} icon={Pencil1Icon} />
+                  <DestroyButton onClick={() => confirmDestroy(charge.dataValues.id)} />
                 </TableCell>
               </TableRow>
             ))}

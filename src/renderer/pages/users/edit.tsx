@@ -32,6 +32,7 @@ const formSchema = z.object({
   name: z.string().min(2).max(50),
   contact: z.string().min(2).max(50),
   type: z.string(),
+  upiId: z.string().nullable(),
 })
 
 export default function UsersEditPage() {
@@ -47,6 +48,7 @@ export default function UsersEditPage() {
       name: "",
       contact: "",
       type: "",
+      upiId: "",
     },
   })
 
@@ -70,6 +72,7 @@ export default function UsersEditPage() {
       form.setValue("contact", response.dataValues.contact)
       form.setValue("password", response.dataValues.password)
       form.setValue("type", response.dataValues.type)
+      form.setValue("upiId", response.dataValues.upiId)
       return null
     }
 
@@ -146,12 +149,26 @@ export default function UsersEditPage() {
             />
             <FormField
               control={form.control}
+              name="upiId"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>UPI ID</FormLabel>
+                  <FormControl>
+                    <Input placeholder="UPI ID" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
               name="type"
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>User Type</FormLabel>
                   <FormControl>
                     <RadioGroup
+                      value={field.value}
                       onValueChange={field.onChange}
                       defaultValue={field.value}
                     >

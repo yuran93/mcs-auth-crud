@@ -1,6 +1,6 @@
 import { ReactNode } from "react"
 import { useLocation, useNavigate } from "react-router-dom"
-import { HomeIcon, PersonIcon, TextAlignCenterIcon } from "@radix-ui/react-icons"
+import { BackpackIcon, HomeIcon, PersonIcon, TextAlignCenterIcon } from "@radix-ui/react-icons"
 import { MainTransition } from "@/components/providers/transition-provider"
 import { useAuth } from "@/hooks/auth"
 import { BaseLayout } from "@/layouts/base-layout"
@@ -55,6 +55,7 @@ export function AuthLayout({ children, className }: Props) {
         <div className="flex flex-col">
           <SidebarItem label="Home" url="/" icon={<HomeIcon />} />
           <SidebarItem label="Manage Users" url="/users" icon={<PersonIcon />} />
+          <SidebarItem label="Manage Charges" url="/charges" icon={<BackpackIcon />} />
         </div>
       </div>
       <div className="flex-1">
