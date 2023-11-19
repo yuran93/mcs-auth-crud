@@ -1,9 +1,9 @@
 import * as z from "zod"
+import { toast } from "sonner"
 import { useEffect } from "react"
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useNavigate, useParams } from "react-router-dom"
-import { toast } from "sonner"
 import { ArrowLeftIcon } from "@radix-ui/react-icons"
 import { AuthLayout } from "@/layouts/auth-layout"
 import {
@@ -25,6 +25,7 @@ import { Input } from "@/components/ui/input"
 import { NavigationButton } from "@/components/customs/buttons"
 import { useDatabase } from "@/hooks/database"
 import { Owner, Renter } from "@/config/user-types"
+import { toDateString } from "@/lib/utils"
 
 const formSchema = z.object({
   name: z.string().min(2).max(50),
@@ -64,7 +65,7 @@ export default function ChargesEditPage() {
 
     if (response) {
       form.setValue("name", response.dataValues.name)
-      form.setValue("date", response.dataValues.date)
+      form.setValue("date", toDateString(response.dataValues.date))
       form.setValue("amount", response.dataValues.amount)
       form.setValue("type", response.dataValues.type)
       return null
