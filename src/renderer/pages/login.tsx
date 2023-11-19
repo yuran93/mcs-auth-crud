@@ -16,7 +16,7 @@ import { Input } from "@/components/ui/input"
 import icon from "../../../assets/icon.png"
 
 const formSchema = z.object({
-  username: z.string().min(2).max(50),
+  email: z.string().min(2).max(50).email(),
   password: z.string().min(2).max(50),
 })
 
@@ -25,14 +25,13 @@ export default function LoginPage() {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      username: "",
+      email: "",
       password: "",
     },
   })
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
-    console.log(values)
-    attemptLogin('admin', 'admin')
+    attemptLogin(values.email, values.password)
   }
 
   return (
@@ -49,11 +48,11 @@ export default function LoginPage() {
             >
               <FormField
                 control={form.control}
-                name="username"
+                name="email"
                 render={({ field }) => (
                   <FormItem>
                     <FormControl>
-                      <Input placeholder="Username" {...field} />
+                      <Input placeholder="Email" {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>

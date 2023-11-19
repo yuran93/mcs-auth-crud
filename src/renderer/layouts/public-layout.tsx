@@ -1,5 +1,6 @@
 import { ReactNode } from "react"
 import { BaseLayout } from "@/layouts/base-layout"
+import { MainTransition } from "@/components/providers/transition-provider"
 import { cn } from "@/lib/utils"
 
 type Props = {
@@ -9,8 +10,13 @@ type Props = {
 
 export function PublicLayout({ children, className }: Props) {
   return (
-    <BaseLayout className={cn("flex flex-col items-center justify-center", className)}>
-      {children}
+    <BaseLayout>
+      <MainTransition className={cn(
+        "min-h-screen flex flex-col items-center justify-center",
+        className,
+      )}>
+        {children}
+      </MainTransition>
     </BaseLayout>
   )
 }

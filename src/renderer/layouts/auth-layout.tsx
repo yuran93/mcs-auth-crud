@@ -1,6 +1,7 @@
 import { ReactNode } from "react"
 import { useLocation, useNavigate } from "react-router-dom"
-import { HomeIcon, TextAlignCenterIcon } from "@radix-ui/react-icons"
+import { HomeIcon, PersonIcon, TextAlignCenterIcon } from "@radix-ui/react-icons"
+import { MainTransition } from "@/components/providers/transition-provider"
 import { useAuth } from "@/hooks/auth"
 import { BaseLayout } from "@/layouts/base-layout"
 import { Button } from "@/components/ui/button"
@@ -47,24 +48,24 @@ export function AuthLayout({ children, className }: Props) {
 
   return (
     <BaseLayout className="flex">
-      <div className="w-[250px] bg-foreground/5 border-r border-foreground/10">
+      <div className="w-[250px] border-r border-foreground/10">
         <div className="p-6">
           <img className="mb-3" src={iconImage} width={50} />
         </div>
         <div className="flex flex-col">
           <SidebarItem label="Home" url="/" icon={<HomeIcon />} />
-          <SidebarItem label="Login" url="/login" icon={<HomeIcon />} />
+          <SidebarItem label="Manage Users" url="/users" icon={<PersonIcon />} />
         </div>
       </div>
       <div className="flex-1">
-        <div className="flex justify-end p-3">
+        <div className="flex justify-end py-3 px-6">
           <Popover>
             <PopoverTrigger asChild>
               <Button variant="outline" size="sm">
                 <TextAlignCenterIcon />
               </Button>
             </PopoverTrigger>
-            <PopoverContent className="w-[140px] p-0 mr-3">
+            <PopoverContent className="w-[140px] p-0 mr-6">
               <Button
                 onClick={logout}
                 variant="ghost"
@@ -76,9 +77,9 @@ export function AuthLayout({ children, className }: Props) {
             </PopoverContent>
           </Popover>
         </div>
-        <div className={cn("p-6", className)}>
+        <MainTransition className={cn("p-6", className)}>
           {children}
-        </div>
+        </MainTransition>
       </div>
     </BaseLayout>
   )

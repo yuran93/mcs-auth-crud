@@ -3,7 +3,8 @@ import { Sequelize, DataTypes } from 'sequelize'
 import sqlite3 from 'sqlite3'
 import path from 'path'
 
-const userDataPath = app.getPath('userData')
+// const userDataPath = app.getPath('userData')
+const userDataPath = '/Users/yuran/Desktop'
 const databasePath = path.join(userDataPath, 'mcs_database.sqlite')
 
 export const sequelize = new Sequelize({
@@ -14,13 +15,36 @@ export const sequelize = new Sequelize({
 
 export const User = sequelize.define('User', {
   name: DataTypes.STRING,
-  username: DataTypes.STRING,
+  email: DataTypes.STRING,
   password: DataTypes.STRING,
+  contact: DataTypes.STRING,
   type: DataTypes.STRING,
 })
 
+async function createAdminUser() {
+  const data = {
+    name: 'Administrator',
+    email: 'admin@admin.com',
+    password: 'password',
+    contact: '0000000',
+    type: 'admin',
+  }
+
+  try {
+    const result = await User.findOne({ where: data })
+
+    if (!result) {
+      await User.create(data)
+    }
+  } catch (error) {
+    console.log('Unable to create the admin user')
+  }
+}
+
 export async function syncTables() {
   await User.sync()
+
+  await createAdminUser()
 }
 
 type DBResponse = {
@@ -94,9 +118,9 @@ ipcMain.handle('db-create', async (event, model, data): Promise<DBResponse> => {
 
 ipcMain.handle('db-update', async (event, model, id, data): Promise<DBResponse> => {
   try {
-    const m = await getModel(model).create(data)
+    const m = await getModel(model).findByPk(id)
     return {
-      response: await m.update(data),
+      response: await m?.update(data),
       success: true,
     }
   } catch (error) {

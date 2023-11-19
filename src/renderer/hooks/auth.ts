@@ -14,16 +14,17 @@ export function useAuth() {
     navigate('/login')
   }
 
-  const attemptLogin = async (username: string, password: string) => {
+  const attemptLogin = async (email: string, password: string) => {
     const record = await findOne('User', {
-      where: { username, password }
+      where: { email, password }
     })
 
     if (record) {
       authLogin({
         id: record.dataValues.id,
         name: record.dataValues.name,
-        username: record.dataValues.username,
+        email: record.dataValues.email,
+        contact: record.dataValues.contact,
         password: record.dataValues.password,
         type: record.dataValues.type,
       })
