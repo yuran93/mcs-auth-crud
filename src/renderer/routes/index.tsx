@@ -13,9 +13,11 @@ import CollectionsIndexPage from "@/pages/collections"
 import CollectionsCreatePage from "@/pages/collections/create"
 import CollectionsEditPage from "@/pages/collections/edit"
 import ActionsProfilePage from "@/pages/actions/profile"
+import RegisterPage from "@/pages/register"
 
 export default createMemoryRouter([
   { path: "/login",  element: <LoginPage /> },
+  { path: "/register",  element: <RegisterPage /> },
   { path: "/",  element: <AuthGuard element={<DashboardPage />} /> },
 
   { path: "/reports/collection",  element: <AuthGuard element={<DashboardPage />} /> },

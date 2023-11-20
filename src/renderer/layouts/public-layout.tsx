@@ -12,7 +12,7 @@ export function PublicLayout({ children, className }: Props) {
   return (
     <BaseLayout>
       <MainTransition className={cn(
-        "min-h-screen flex flex-col items-center justify-center",
+        "min-h-screen flex flex-col items-center justify-center p-6",
         className,
       )}>
         {children}

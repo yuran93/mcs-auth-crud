@@ -7,7 +7,7 @@ export function useAuth() {
   const navigate = useNavigate()
   const authLogout = useAuthStore((state) => state.logout)
   const authLogin = useAuthStore((state) => state.login)
-  const { findOne } = useDatabase()
+  const { create, findOne } = useDatabase()
 
   const logout = async () => {
     authLogout()
@@ -35,8 +35,15 @@ export function useAuth() {
     return toast.error("Invalid credentials.")
   }
 
+  const register = async (data: any) => {
+    const record = await create('User', data)
+
+    attemptLogin(record.email, record.password)
+  }
+
   return {
     attemptLogin,
+    register,
     logout,
   }
 }

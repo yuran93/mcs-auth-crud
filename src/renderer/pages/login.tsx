@@ -1,5 +1,7 @@
 import * as z from "zod"
 import { useForm } from "react-hook-form"
+import { useNavigate } from "react-router-dom"
+import { Divider } from "@tremor/react"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { PublicLayout } from "@/layouts/public-layout"
 import { useAuth } from "@/hooks/auth"
@@ -22,6 +24,7 @@ const formSchema = z.object({
 
 export default function LoginPage() {
   const { attemptLogin } = useAuth()
+  const navigate = useNavigate()
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -71,6 +74,14 @@ export default function LoginPage() {
                 )}
               />
               <Button type="submit" className="w-full">Log in</Button>
+              <Divider />
+              <Button
+                variant="secondary"
+                className="w-full"
+                onClick={() => navigate('/register')}
+              >
+                Register
+              </Button>
             </form>
           </Form>
         </CardContent>
