@@ -1,14 +1,14 @@
 import { Card, Text, Metric, Flex, ProgressBar } from "@tremor/react"
 import { AuthLayout } from "@/layouts/auth-layout"
-import { useDatabase } from "@/hooks/database"
 import { useEffect } from "react"
+import { getCharges } from "@/lib/reports"
+import { Owner, Renter } from "@/config/user-types"
 
 export default function DashboardPage() {
-  const { findAll } = useDatabase()
   useEffect(() => {
     const init = async () => {
-      const data = await findAll('Collection')
-      console.log(data)
+      const charges = await getCharges('2023-10-20', '2024-10-20', Renter)
+      console.log(charges)
     }
 
     init()

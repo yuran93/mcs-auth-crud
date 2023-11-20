@@ -47,7 +47,7 @@ function SidebarItem({ label, icon, url }: SidebarItemProps) {
 function SideBarHeading({ label }: { label: string }) {
   return (
     <h2
-      className="py-3 px-6 text-xs text-foreground/30 font-semibold border-t"
+      className="py-3 px-6 text-xs text-foreground/30 font-semibold"
     >
       {label}
     </h2>
@@ -78,7 +78,7 @@ export function AuthLayout({ children, className }: Props) {
         </div>
       </div>
       <div className="flex-1">
-        <div className="flex justify-end py-3 px-6 gap-3">
+        <div className="flex justify-end py-3 px-6 gap-3 border-b">
           <div className="flex items-center">
             <p className="text-xs text-foreground/50">
               {user?.name}

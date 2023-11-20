@@ -1,6 +1,18 @@
 import { toast } from "sonner"
 
 export function useDatabase() {
+  const query = async (sql: string) => {
+    const { response, success } = await window.electron.ipcRenderer
+      .invoke('db-query', sql)
+
+    if (success) {
+      return JSON.parse(response)
+    }
+
+    toast.error('Unable to fetch the records.')
+
+    return null
+  }
   const findAll = async (modal: string, options = {}, page = 1, perPage = 10) => {
     const { response, success } = await window.electron.ipcRenderer
       .invoke('db-find-all', modal, options, page, perPage)
@@ -80,6 +92,7 @@ export function useDatabase() {
   }
 
   return {
+    query,
     findAll,
     findByPk,
     findOne,

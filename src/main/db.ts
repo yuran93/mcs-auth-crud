@@ -87,13 +87,26 @@ export function getModel(key: string) {
   throw new Error("Model not found.")
 }
 
+ipcMain.handle('db-query', async (event, sql): Promise<DBResponse> => {
+  try {
+    const [response] = await sequelize.query(sql)
+
+    return {
+      response: JSON.stringify(response),
+      success: true,
+    }
+  } catch (error) {
+    console.log(error)
+    return {
+      response: null,
+      success: false,
+    }
+  }
+})
+
+
 ipcMain.handle('db-find-all', async (event, model, options = {}, page = 1, perPage = 10): Promise<DBResponse> => {
   try {
-    console.log({
-      ...options,
-      offset: ((page - 1) * perPage),
-      limit: perPage,
-    })
     const response = await getModel(model).findAll({
       ...options,
       offset: ((page - 1) * perPage),
