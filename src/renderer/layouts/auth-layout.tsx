@@ -1,6 +1,6 @@
 import { ReactNode } from "react"
 import { useLocation, useNavigate } from "react-router-dom"
-import { BackpackIcon, HomeIcon, PersonIcon, TextAlignCenterIcon } from "@radix-ui/react-icons"
+import { BackpackIcon, HomeIcon, PersonIcon, PieChartIcon, TextAlignCenterIcon } from "@radix-ui/react-icons"
 import { MainTransition } from "@/components/providers/transition-provider"
 import { useAuth } from "@/hooks/auth"
 import { BaseLayout } from "@/layouts/base-layout"
@@ -43,6 +43,16 @@ function SidebarItem({ label, icon, url }: SidebarItemProps) {
   )
 }
 
+function SideBarHeading({ label }: { label: string }) {
+  return (
+    <h2
+      className="py-3 px-6 text-xs text-foreground/30 font-semibold border-t"
+    >
+      {label}
+    </h2>
+  )
+}
+
 export function AuthLayout({ children, className }: Props) {
   const { logout } = useAuth()
 
@@ -54,8 +64,12 @@ export function AuthLayout({ children, className }: Props) {
         </div>
         <div className="flex flex-col">
           <SidebarItem label="Home" url="/" icon={<HomeIcon />} />
+          <SideBarHeading label="Manage" />
           <SidebarItem label="Manage Users" url="/users" icon={<PersonIcon />} />
           <SidebarItem label="Manage Charges" url="/charges" icon={<BackpackIcon />} />
+          <SidebarItem label="Manage Collections" url="/collections" icon={<PieChartIcon />} />
+          <SideBarHeading label="Reporting" />
+          <SidebarItem label="Collection Report" url="/reports/collection" icon={<HomeIcon />} />
         </div>
       </div>
       <div className="flex-1">

@@ -29,6 +29,14 @@ export const Charge = sequelize.define('Charge', {
   date: DataTypes.DATE,
 })
 
+export const Collection = sequelize.define('Collection', {
+  name: DataTypes.STRING,
+  amount: DataTypes.NUMBER,
+  date: DataTypes.DATE,
+})
+
+Collection.belongsTo(User)
+
 async function createAdminUser() {
   const data = {
     name: 'Administrator',
@@ -55,6 +63,7 @@ async function createAdminUser() {
 export async function syncTables() {
   await User.sync()
   await Charge.sync()
+  await Collection.sync()
 
   await createAdminUser()
 }
@@ -70,6 +79,9 @@ export function getModel(key: string) {
   }
   if (key === 'Charge') {
     return Charge
+  }
+  if (key === 'Collection') {
+    return Collection
   }
 
   throw new Error("Model not found.")
