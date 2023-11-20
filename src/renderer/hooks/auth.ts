@@ -27,6 +27,7 @@ export function useAuth() {
         contact: record.contact,
         password: record.password,
         type: record.type,
+        upiId: record.upiId,
       })
       return navigate('/')
     }

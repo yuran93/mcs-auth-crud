@@ -12,6 +12,7 @@ import {
 } from "@/components/ui/popover"
 import { cn } from "@/lib/utils"
 import iconImage from "../../../assets/icon.png"
+import { useAuthStore } from "@/stores/auth"
 
 type Props = {
   className?: string
@@ -55,6 +56,7 @@ function SideBarHeading({ label }: { label: string }) {
 
 export function AuthLayout({ children, className }: Props) {
   const { logout } = useAuth()
+  const user = useAuthStore((state) => state.user)
 
   return (
     <BaseLayout className="flex">
@@ -66,6 +68,7 @@ export function AuthLayout({ children, className }: Props) {
           <SidebarItem label="Home" url="/" icon={<HomeIcon />} />
           <SideBarHeading label="Actions" />
           <SidebarItem label="Pay Dues" url="/actions/pay" icon={<RocketIcon />} />
+          <SidebarItem label="Update Profile" url="/actions/profile" icon={<PersonIcon />} />
           <SideBarHeading label="Manage" />
           <SidebarItem label="Manage Users" url="/users" icon={<PersonIcon />} />
           <SidebarItem label="Manage Charges" url="/charges" icon={<BackpackIcon />} />
@@ -75,7 +78,12 @@ export function AuthLayout({ children, className }: Props) {
         </div>
       </div>
       <div className="flex-1">
-        <div className="flex justify-end py-3 px-6">
+        <div className="flex justify-end py-3 px-6 gap-3">
+          <div className="flex items-center">
+            <p className="text-xs text-foreground/50">
+              {user?.name}
+            </p>
+          </div>
           <Popover>
             <PopoverTrigger asChild>
               <Button variant="outline" size="sm">

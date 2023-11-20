@@ -8,6 +8,7 @@ type AuthUser = {
   contact: string
   password: string
   type: string
+  upiId: string
 }
 
 type AuthStore = {

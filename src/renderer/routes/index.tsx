@@ -12,6 +12,7 @@ import ChargesEditPage from "@/pages/charges/edit"
 import CollectionsIndexPage from "@/pages/collections"
 import CollectionsCreatePage from "@/pages/collections/create"
 import CollectionsEditPage from "@/pages/collections/edit"
+import ActionsProfilePage from "@/pages/actions/profile"
 
 export default createMemoryRouter([
   { path: "/login",  element: <LoginPage /> },
@@ -20,6 +21,7 @@ export default createMemoryRouter([
   { path: "/reports/collection",  element: <AuthGuard element={<DashboardPage />} /> },
 
   { path: "/actions/pay",  element: <AuthGuard element={<ActionsPayPage />} /> },
+  { path: "/actions/profile",  element: <AuthGuard element={<ActionsProfilePage />} /> },
 
   { path: "/users",  element: <AuthGuard element={<UsersIndexPage />} /> },
   { path: "/users/create",  element: <AuthGuard element={<UsersCreatePage />} /> },
