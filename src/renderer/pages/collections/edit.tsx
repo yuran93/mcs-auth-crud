@@ -64,10 +64,10 @@ export default function CollectionsEditPage() {
     const response = await findByPk('Collection', params.id)
 
     if (response) {
-      form.setValue("name", response.dataValues.name)
-      form.setValue("date", toDateString(response.dataValues.date))
-      form.setValue("amount", response.dataValues.amount)
-      form.setValue("type", response.dataValues.type)
+      form.setValue("name", response.name)
+      form.setValue("date", toDateString(response.date))
+      form.setValue("amount", response.amount)
+      form.setValue("type", response.type)
       return null
     }
 

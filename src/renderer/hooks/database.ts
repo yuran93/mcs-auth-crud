@@ -6,7 +6,7 @@ export function useDatabase() {
       .invoke('db-find-all', modal, options, page, perPage)
 
     if (success) {
-      return response
+      return JSON.parse(response)
     }
 
     toast.error('Unable to fetch the records.')
@@ -19,7 +19,7 @@ export function useDatabase() {
       .invoke('db-find-by-pk', modal, id)
 
     if (success) {
-      return response
+      return JSON.parse(response)
     }
 
     toast.error('Unable to fetch the record.')
@@ -32,7 +32,7 @@ export function useDatabase() {
       .invoke('db-find-one', modal, filters)
 
     if (success) {
-      return response
+      return JSON.parse(response)
     }
 
     toast.error('Unable to fetch the record.')
@@ -45,7 +45,7 @@ export function useDatabase() {
       .invoke('db-create', modal, data)
 
     if (success) {
-      return response
+      return JSON.parse(response)
     }
 
     toast.error('Unable to create the record.')
@@ -58,7 +58,7 @@ export function useDatabase() {
       .invoke('db-update', modal, id, data)
 
     if (success) {
-      return response
+      return JSON.parse(response)
     }
 
     toast.error('Unable to update the record.')
@@ -71,7 +71,7 @@ export function useDatabase() {
       .invoke('db-destroy', modal, id)
 
     if (success) {
-      return response
+      return JSON.parse(response)
     }
 
     toast.error('Unable to destroy the record.')

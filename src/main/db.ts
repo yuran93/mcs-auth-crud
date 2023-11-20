@@ -89,15 +89,23 @@ export function getModel(key: string) {
 
 ipcMain.handle('db-find-all', async (event, model, options = {}, page = 1, perPage = 10): Promise<DBResponse> => {
   try {
+    console.log({
+      ...options,
+      offset: ((page - 1) * perPage),
+      limit: perPage,
+    })
+    const response = await getModel(model).findAll({
+      ...options,
+      offset: ((page - 1) * perPage),
+      limit: perPage,
+    })
+
     return {
-      response: await getModel(model).findAll({
-        ...options,
-        offset: ((page - 1) * perPage),
-        limit: perPage,
-      }),
+      response: JSON.stringify(response),
       success: true,
     }
   } catch (error) {
+    console.log(error)
     return {
       response: null,
       success: false,
@@ -107,11 +115,14 @@ ipcMain.handle('db-find-all', async (event, model, options = {}, page = 1, perPa
 
 ipcMain.handle('db-find-by-pk', async (event, model, id): Promise<DBResponse> => {
   try {
+    const response = await getModel(model).findByPk(id)
+
     return {
-      response: await getModel(model).findByPk(id),
+      response: JSON.stringify(response),
       success: true,
     }
   } catch (error) {
+    console.log(error)
     return {
       response: null,
       success: false,
@@ -121,11 +132,14 @@ ipcMain.handle('db-find-by-pk', async (event, model, id): Promise<DBResponse> =>
 
 ipcMain.handle('db-find-one', async (event, model, filters): Promise<DBResponse> => {
   try {
+    const response = await getModel(model).findOne(filters)
+
     return {
-      response: await getModel(model).findOne(filters),
+      response: JSON.stringify(response),
       success: true,
     }
   } catch (error) {
+    console.log(error)
     return {
       response: null,
       success: false,
@@ -135,11 +149,14 @@ ipcMain.handle('db-find-one', async (event, model, filters): Promise<DBResponse>
 
 ipcMain.handle('db-create', async (event, model, data): Promise<DBResponse> => {
   try {
+    const response = await getModel(model).create(data)
+
     return {
-      response: await getModel(model).create(data),
+      response: JSON.stringify(response),
       success: true,
     }
   } catch (error) {
+    console.log(error)
     return {
       response: null,
       success: false,
@@ -150,11 +167,14 @@ ipcMain.handle('db-create', async (event, model, data): Promise<DBResponse> => {
 ipcMain.handle('db-update', async (event, model, id, data): Promise<DBResponse> => {
   try {
     const m = await getModel(model).findByPk(id)
+    const response = await m?.update(data)
+
     return {
-      response: await m?.update(data),
+      response: JSON.stringify(response),
       success: true,
     }
   } catch (error) {
+    console.log(error)
     return {
       response: null,
       success: false,
@@ -164,14 +184,16 @@ ipcMain.handle('db-update', async (event, model, id, data): Promise<DBResponse> 
 
 ipcMain.handle('db-destroy', async (event, model, id): Promise<DBResponse> => {
   try {
+    const response = await getModel(model).destroy({
+      where: { id }
+    })
+
     return {
-      response: await getModel(model).destroy({
-        where: { id }
-      }),
+      response: JSON.stringify(response),
       success: true,
     }
   } catch (error) {
-
+    console.log(error)
     return {
       response: null,
       success: false,

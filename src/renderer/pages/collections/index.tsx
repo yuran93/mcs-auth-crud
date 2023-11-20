@@ -26,9 +26,12 @@ export default function CollectionsIndexPage() {
   const [selectedId, setSelectedId] = useState(null)
 
   const populateRecords = async () => {
-    const data = await findAll('Collection')
+    const data = await findAll('Collection', {
+      include: 'User',
+    }, page)
 
     if (data) {
+      console.log(data)
       setCollections(data)
     }
   }
@@ -73,6 +76,7 @@ export default function CollectionsIndexPage() {
         <Table className="mt-5">
           <TableHead>
             <TableRow>
+              <TableHeaderCell>User</TableHeaderCell>
               <TableHeaderCell>Date</TableHeaderCell>
               <TableHeaderCell>Name</TableHeaderCell>
               <TableHeaderCell>Amount</TableHeaderCell>
@@ -81,13 +85,14 @@ export default function CollectionsIndexPage() {
           </TableHead>
           <TableBody>
             {collections.map((collection) => (
-              <TableRow key={collection.dataValues.id}>
-                <TableCell>{toDateString(collection.dataValues.date)}</TableCell>
-                <TableCell>{collection.dataValues.name}</TableCell>
-                <TableCell>{collection.dataValues.amount}</TableCell>
+              <TableRow key={collection.id}>
+                <TableCell>{collection.User.name}</TableCell>
+                <TableCell>{toDateString(collection.date)}</TableCell>
+                <TableCell>{collection.name}</TableCell>
+                <TableCell>{collection.amount}</TableCell>
                 <TableCell className="flex gap-3">
-                  <ActionButton url={`/collections/${collection.dataValues.id}/edit`} icon={Pencil1Icon} />
-                  <DestroyButton onClick={() => confirmDestroy(collection.dataValues.id)} />
+                  <ActionButton url={`/collections/${collection.id}/edit`} icon={Pencil1Icon} />
+                  <DestroyButton onClick={() => confirmDestroy(collection.id)} />
                 </TableCell>
               </TableRow>
             ))}

@@ -81,14 +81,14 @@ export default function UsersIndexPage() {
           </TableHead>
           <TableBody>
             {users.map((user) => (
-              <TableRow key={user.dataValues.id}>
-                <TableCell>{user.dataValues.name}</TableCell>
-                <TableCell>{user.dataValues.email}</TableCell>
-                <TableCell>{user.dataValues.contact}</TableCell>
-                <TableCell>{user.dataValues.type}</TableCell>
+              <TableRow key={user.id}>
+                <TableCell>{user.name}</TableCell>
+                <TableCell>{user.email}</TableCell>
+                <TableCell>{user.contact}</TableCell>
+                <TableCell>{user.type}</TableCell>
                 <TableCell className="flex gap-3">
-                  <ActionButton url={`/users/${user.dataValues.id}/edit`} icon={Pencil1Icon} />
-                  <DestroyButton onClick={() => confirmDestroy(user.dataValues.id)} />
+                  <ActionButton url={`/users/${user.id}/edit`} icon={Pencil1Icon} />
+                  <DestroyButton onClick={() => confirmDestroy(user.id)} />
                 </TableCell>
               </TableRow>
             ))}

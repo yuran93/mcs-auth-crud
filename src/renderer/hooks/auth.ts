@@ -21,12 +21,12 @@ export function useAuth() {
 
     if (record) {
       authLogin({
-        id: record.dataValues.id,
-        name: record.dataValues.name,
-        email: record.dataValues.email,
-        contact: record.dataValues.contact,
-        password: record.dataValues.password,
-        type: record.dataValues.type,
+        id: record.id,
+        name: record.name,
+        email: record.email,
+        contact: record.contact,
+        password: record.password,
+        type: record.type,
       })
       return navigate('/')
     }

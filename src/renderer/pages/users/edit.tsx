@@ -67,12 +67,12 @@ export default function UsersEditPage() {
     const response = await findByPk('User', params.id)
 
     if (response) {
-      form.setValue("name", response.dataValues.name)
-      form.setValue("email", response.dataValues.email)
-      form.setValue("contact", response.dataValues.contact)
-      form.setValue("password", response.dataValues.password)
-      form.setValue("type", response.dataValues.type)
-      form.setValue("upiId", response.dataValues.upiId)
+      form.setValue("name", response.name)
+      form.setValue("email", response.email)
+      form.setValue("contact", response.contact)
+      form.setValue("password", response.password)
+      form.setValue("type", response.type)
+      form.setValue("upiId", response.upiId)
       return null
     }
 

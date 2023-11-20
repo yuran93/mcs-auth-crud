@@ -26,7 +26,7 @@ export default function ChargesIndexPage() {
   const [selectedId, setSelectedId] = useState(null)
 
   const populateRecords = async () => {
-    const data = await findAll('Charge')
+    const data = await findAll('Charge', {}, page)
 
     if (data) {
       setCharges(data)
@@ -82,14 +82,14 @@ export default function ChargesIndexPage() {
           </TableHead>
           <TableBody>
             {charges.map((charge) => (
-              <TableRow key={charge.dataValues.id}>
-                <TableCell>{toDateString(charge.dataValues.date)}</TableCell>
-                <TableCell>{charge.dataValues.name}</TableCell>
-                <TableCell>{charge.dataValues.amount}</TableCell>
-                <TableCell>{charge.dataValues.type}</TableCell>
+              <TableRow key={charge.id}>
+                <TableCell>{toDateString(charge.date)}</TableCell>
+                <TableCell>{charge.name}</TableCell>
+                <TableCell>{charge.amount}</TableCell>
+                <TableCell>{charge.type}</TableCell>
                 <TableCell className="flex gap-3">
-                  <ActionButton url={`/charges/${charge.dataValues.id}/edit`} icon={Pencil1Icon} />
-                  <DestroyButton onClick={() => confirmDestroy(charge.dataValues.id)} />
+                  <ActionButton url={`/charges/${charge.id}/edit`} icon={Pencil1Icon} />
+                  <DestroyButton onClick={() => confirmDestroy(charge.id)} />
                 </TableCell>
               </TableRow>
             ))}

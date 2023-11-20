@@ -7,7 +7,7 @@ export default function DashboardPage() {
   const { findAll } = useDatabase()
   useEffect(() => {
     const init = async () => {
-      const data = await findAll('User')
+      const data = await findAll('Collection')
       console.log(data)
     }
 
