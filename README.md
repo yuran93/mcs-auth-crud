@@ -18,4 +18,5 @@ npm run package-all
 Username: `admin@admin.com`
 Password: `password`
 
+## Notes
 Note: Executables can be found on `release/build` folder

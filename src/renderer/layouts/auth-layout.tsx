@@ -20,6 +20,7 @@ import {
 } from "@/components/ui/popover"
 import { useAuthStore } from "@/stores/auth"
 import { cn } from "@/lib/utils"
+import { Admin } from "@/config/user-types"
 import iconImage from "../../../assets/icon.png"
 
 type Props = {
@@ -74,22 +75,26 @@ export function AuthLayout({ children, className }: Props) {
         </div>
         <div className="flex flex-col">
           <SidebarItem label="Home" url="/" icon={<HomeIcon />} />
+          {user?.type !== Admin && (<>
           <SideBarHeading label="Actions" />
           <SidebarItem label="Pay Dues" url="/actions/pay" icon={<RocketIcon />} />
           <SidebarItem label="Update Profile" url="/actions/profile" icon={<PersonIcon />} />
           <SidebarItem label="Transactions" url="/actions/transactions" icon={<ArchiveIcon />} />
-          <SideBarHeading label="Manage" />
-          <SidebarItem label="Manage Users" url="/users" icon={<PersonIcon />} />
-          <SidebarItem label="Manage Charges" url="/charges" icon={<BackpackIcon />} />
-          <SidebarItem label="Manage Collections" url="/collections" icon={<PieChartIcon />} />
-          <SideBarHeading label="Reporting" />
-          <SidebarItem label="Collection Report" url="/reports/collection" icon={<HomeIcon />} />
+          </>)}
+          {user?.type === Admin && (<>
+            <SideBarHeading label="Manage" />
+            <SidebarItem label="Manage Users" url="/users" icon={<PersonIcon />} />
+            <SidebarItem label="Manage Charges" url="/charges" icon={<BackpackIcon />} />
+            <SidebarItem label="Manage Collections" url="/collections" icon={<PieChartIcon />} />
+            <SideBarHeading label="Reporting" />
+            <SidebarItem label="Collection Report" url="/reports/collection" icon={<HomeIcon />} />
+          </>)}
         </div>
       </div>
       <div className="flex-1">
         <div className="flex justify-end py-3 px-6 gap-3 border-b">
           <div className="flex items-center">
-            <p className="text-xs text-foreground/50">
+            <p className="text-xs font-semibold text-foreground/50">
               {user?.name}
             </p>
           </div>
