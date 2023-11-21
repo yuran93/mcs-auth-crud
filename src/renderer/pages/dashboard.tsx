@@ -1,14 +1,28 @@
 import { Card, Text, Metric, Flex, ProgressBar } from "@tremor/react"
 import { AuthLayout } from "@/layouts/auth-layout"
-import { useEffect } from "react"
-import { getCharges } from "@/lib/reports"
+import { useEffect, useState } from "react"
+import { getCharges, getCollection } from "@/lib/reports"
 import { Owner, Renter } from "@/config/user-types"
+import { useAuthStore } from "@/stores/auth"
+import { toCurrency } from "@/lib/utils"
 
 export default function DashboardPage() {
+  const user = useAuthStore((state) => state.user)
+  const [charges, setCharges] = useState(0)
+  const [collections, setCollections] = useState(0)
+
+  const percentage = () => {
+    return Math.round(collections/charges * 100)
+  }
+
   useEffect(() => {
     const init = async () => {
-      const charges = await getCharges('2023-10-20', '2024-10-20', Renter)
-      console.log(charges)
+      setCharges(
+        await getCharges('2023-01-20', '2024-10-20', user?.type)
+      )
+      setCollections(
+        await getCollection('2023-01-20', '2024-10-20', user?.id)
+      )
     }
 
     init()
@@ -17,13 +31,13 @@ export default function DashboardPage() {
   return (
     <AuthLayout>
       <Card className="max-w-xs">
-        <Text>Sales</Text>
-        <Metric>$ 71,465</Metric>
+        <Text>Paid</Text>
+        <Metric>{toCurrency(collections)}</Metric>
         <Flex className="mt-4">
-          <Text>32% of annual target</Text>
-          <Text>$ 225,000</Text>
+          <Text>{percentage()}% of due payments</Text>
+          <Text>{toCurrency(charges)}</Text>
         </Flex>
-        <ProgressBar value={32} className="mt-2" />
+        <ProgressBar value={percentage()} className="mt-2" />
       </Card>
 
     </AuthLayout>

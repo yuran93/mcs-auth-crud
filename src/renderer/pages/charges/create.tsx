@@ -29,7 +29,7 @@ const formSchema = z.object({
   name: z.string().min(2).max(50),
   date: z.string(),
   type: z.string(),
-  amount: z.string(),
+  amount: z.any(),
 })
 
 export default function ChargesCreatePage() {

@@ -20,18 +20,15 @@ import {
   Card,
   Title,
 } from "@tremor/react"
-import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
 import { Input } from "@/components/ui/input"
 import { NavigationButton } from "@/components/customs/buttons"
 import { useDatabase } from "@/hooks/database"
-import { Owner, Renter } from "@/config/user-types"
 import { toDateString } from "@/lib/utils"
 
 const formSchema = z.object({
   name: z.string().min(2).max(50),
   date: z.string().min(2).max(50),
-  amount: z.string(),
-  type: z.string(),
+  amount: z.any(),
 })
 
 export default function CollectionsEditPage() {
@@ -45,7 +42,6 @@ export default function CollectionsEditPage() {
       name: "",
       date: "",
       amount: "",
-      type: "",
     },
   })
 
@@ -67,7 +63,6 @@ export default function CollectionsEditPage() {
       form.setValue("name", response.name)
       form.setValue("date", toDateString(response.date))
       form.setValue("amount", response.amount)
-      form.setValue("type", response.type)
       return null
     }
 
@@ -124,36 +119,6 @@ export default function CollectionsEditPage() {
                   <FormLabel>Amount</FormLabel>
                   <FormControl>
                     <Input type="number" placeholder="Amount" {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="type"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Collection Type</FormLabel>
-                  <FormControl>
-                    <RadioGroup
-                      value={field.value}
-                      onValueChange={field.onChange}
-                      defaultValue={field.value}
-                    >
-                      <FormItem className="flex items-center space-x-3 space-y-0">
-                        <FormControl>
-                          <RadioGroupItem value={Renter} />
-                        </FormControl>
-                        <FormLabel className="font-normal">Renter</FormLabel>
-                      </FormItem>
-                      <FormItem className="flex items-center space-x-3 space-y-0">
-                        <FormControl>
-                          <RadioGroupItem value={Owner} />
-                        </FormControl>
-                        <FormLabel className="font-normal">Owner</FormLabel>
-                      </FormItem>
-                    </RadioGroup>
                   </FormControl>
                   <FormMessage />
                 </FormItem>

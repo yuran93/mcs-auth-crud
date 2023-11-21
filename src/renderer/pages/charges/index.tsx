@@ -17,6 +17,7 @@ import { ActionButton, DestroyButton, NavigationButton } from "@/components/cust
 import { ConfirmDestroy } from "@/components/customs/confirm-destroy"
 import { Pagination } from "@/components/customs/pagination"
 import { toDateString } from "@/lib/utils"
+import { toCurrency } from '../../lib/utils';
 
 export default function ChargesIndexPage() {
   const [page, setPage] = useState(1)
@@ -75,8 +76,8 @@ export default function ChargesIndexPage() {
             <TableRow>
               <TableHeaderCell>Date</TableHeaderCell>
               <TableHeaderCell>Name</TableHeaderCell>
-              <TableHeaderCell>Amount</TableHeaderCell>
               <TableHeaderCell>Type</TableHeaderCell>
+              <TableHeaderCell>Amount</TableHeaderCell>
               <TableHeaderCell className="w-0"></TableHeaderCell>
             </TableRow>
           </TableHead>
@@ -85,8 +86,8 @@ export default function ChargesIndexPage() {
               <TableRow key={charge.id}>
                 <TableCell>{toDateString(charge.date)}</TableCell>
                 <TableCell>{charge.name}</TableCell>
-                <TableCell>{charge.amount}</TableCell>
                 <TableCell>{charge.type}</TableCell>
+                <TableCell>{toCurrency(charge.amount)}</TableCell>
                 <TableCell className="flex gap-3">
                   <ActionButton url={`/charges/${charge.id}/edit`} icon={Pencil1Icon} />
                   <DestroyButton onClick={() => confirmDestroy(charge.id)} />

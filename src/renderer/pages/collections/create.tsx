@@ -19,17 +19,15 @@ import {
   Card,
   Title,
 } from "@tremor/react"
-import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
 import { Input } from "@/components/ui/input"
 import { NavigationButton } from "@/components/customs/buttons"
-import { Owner, Renter } from "@/config/user-types"
 import { useDatabase } from "@/hooks/database"
 
 const formSchema = z.object({
   name: z.string().min(2).max(50),
   date: z.string(),
   type: z.string(),
-  amount: z.string(),
+  amount: z.any(),
 })
 
 export default function CollectionsCreatePage() {
@@ -102,36 +100,6 @@ export default function CollectionsCreatePage() {
                   <FormLabel>Amount</FormLabel>
                   <FormControl>
                     <Input type="number" placeholder="Amount" {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="type"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Collection Type</FormLabel>
-                  <FormControl>
-                    <RadioGroup
-                      value={field.value}
-                      onValueChange={field.onChange}
-                      defaultValue={field.value}
-                    >
-                      <FormItem className="flex items-center space-x-3 space-y-0">
-                        <FormControl>
-                          <RadioGroupItem value={Renter} />
-                        </FormControl>
-                        <FormLabel className="font-normal">Renter</FormLabel>
-                      </FormItem>
-                      <FormItem className="flex items-center space-x-3 space-y-0">
-                        <FormControl>
-                          <RadioGroupItem value={Owner} />
-                        </FormControl>
-                        <FormLabel className="font-normal">Owner</FormLabel>
-                      </FormItem>
-                    </RadioGroup>
                   </FormControl>
                   <FormMessage />
                 </FormItem>

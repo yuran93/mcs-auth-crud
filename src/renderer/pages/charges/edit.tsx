@@ -30,7 +30,7 @@ import { toDateString } from "@/lib/utils"
 const formSchema = z.object({
   name: z.string().min(2).max(50),
   date: z.string().min(2).max(50),
-  amount: z.string(),
+  amount: z.any(),
   type: z.string(),
 })
 
@@ -44,7 +44,7 @@ export default function ChargesEditPage() {
     defaultValues: {
       name: "",
       date: "",
-      amount: "",
+      amount: 0,
       type: "",
     },
   })

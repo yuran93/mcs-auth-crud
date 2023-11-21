@@ -17,6 +17,7 @@ import { ActionButton, DestroyButton, NavigationButton } from "@/components/cust
 import { ConfirmDestroy } from "@/components/customs/confirm-destroy"
 import { Pagination } from "@/components/customs/pagination"
 import { toDateString } from "@/lib/utils"
+import { toCurrency } from '../../lib/utils';
 
 export default function CollectionsIndexPage() {
   const [page, setPage] = useState(1)
@@ -89,7 +90,7 @@ export default function CollectionsIndexPage() {
                 <TableCell>{collection.User.name}</TableCell>
                 <TableCell>{toDateString(collection.date)}</TableCell>
                 <TableCell>{collection.name}</TableCell>
-                <TableCell>{collection.amount}</TableCell>
+                <TableCell>{toCurrency(collection.amount)}</TableCell>
                 <TableCell className="flex gap-3">
                   <ActionButton url={`/collections/${collection.id}/edit`} icon={Pencil1Icon} />
                   <DestroyButton onClick={() => confirmDestroy(collection.id)} />

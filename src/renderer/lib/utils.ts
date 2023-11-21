@@ -1,3 +1,4 @@
+import moment from "moment"
 import { clsx, type ClassValue } from "clsx"
 import { twMerge } from "tailwind-merge"
 
@@ -6,10 +7,11 @@ export function cn(...inputs: ClassValue[]) {
 }
 
 export function toDateString(input: any): string {
-  const date = typeof input === 'string' ? new Date(input) : input
-  return `${date.getFullYear()}-${date.getMonth()}-${date.getDate()}`
+  return moment(input).format('YYYY-MM-DD')
 }
 
-export async function openFile(type: string, folder: string, group: string, filename: string) {
-  await window.electron.ipcRenderer.invoke('ipc-open-file', type, folder, group, filename)
+export function toCurrency(input: number): string {
+  return new Intl.NumberFormat('en-IN', { style: 'currency', currency: 'INR' }).format(
+    input,
+  )
 }

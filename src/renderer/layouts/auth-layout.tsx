@@ -60,7 +60,7 @@ export function AuthLayout({ children, className }: Props) {
 
   return (
     <BaseLayout className="flex">
-      <div className="w-[250px] border-r border-foreground/10">
+      <div className="w-[250px] border-r border-foreground/10 bg-primary/10">
         <div className="p-6">
           <img className="mb-3" src={iconImage} width={50} />
         </div>

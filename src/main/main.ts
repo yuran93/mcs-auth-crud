@@ -123,13 +123,3 @@ app
     })
   })
   .catch(console.log)
-
-// Utils that calls invoke
-// ipcMain.handle('ipc-open-file', async (event, ...args) => {
-//   const appPath = app.isPackaged
-//     ? app.getAppPath()
-//     : path.join(__dirname, '..')
-
-//   const filePath = path.join(appPath, '..', 'assets', 'resources', ...args)
-//   shell.openPath(filePath)
-// })
