@@ -1,6 +1,14 @@
 import { ReactNode } from "react"
 import { useLocation, useNavigate } from "react-router-dom"
-import { BackpackIcon, HomeIcon, PersonIcon, PieChartIcon, RocketIcon, TextAlignCenterIcon } from "@radix-ui/react-icons"
+import {
+  ArchiveIcon,
+  BackpackIcon,
+  HomeIcon,
+  PersonIcon,
+  PieChartIcon,
+  RocketIcon,
+  TextAlignCenterIcon,
+} from "@radix-ui/react-icons"
 import { MainTransition } from "@/components/providers/transition-provider"
 import { useAuth } from "@/hooks/auth"
 import { BaseLayout } from "@/layouts/base-layout"
@@ -10,9 +18,9 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover"
+import { useAuthStore } from "@/stores/auth"
 import { cn } from "@/lib/utils"
 import iconImage from "../../../assets/icon.png"
-import { useAuthStore } from "@/stores/auth"
 
 type Props = {
   className?: string
@@ -69,6 +77,7 @@ export function AuthLayout({ children, className }: Props) {
           <SideBarHeading label="Actions" />
           <SidebarItem label="Pay Dues" url="/actions/pay" icon={<RocketIcon />} />
           <SidebarItem label="Update Profile" url="/actions/profile" icon={<PersonIcon />} />
+          <SidebarItem label="Transactions" url="/actions/transactions" icon={<ArchiveIcon />} />
           <SideBarHeading label="Manage" />
           <SidebarItem label="Manage Users" url="/users" icon={<PersonIcon />} />
           <SidebarItem label="Manage Charges" url="/charges" icon={<BackpackIcon />} />

@@ -1,12 +1,15 @@
 import { Card, Text, Metric, Flex, ProgressBar } from "@tremor/react"
 import { AuthLayout } from "@/layouts/auth-layout"
 import { useEffect, useState } from "react"
-import { getCharges, getCollection } from "@/lib/reports"
-import { Owner, Renter } from "@/config/user-types"
+import { getAverageCharges, getCollection } from "@/lib/reports"
 import { useAuthStore } from "@/stores/auth"
 import { toCurrency } from "@/lib/utils"
+import moment from "moment"
 
 export default function DashboardPage() {
+  const startDate = moment().startOf('month').format('YYYY-MM-DD')
+  const endDate = moment().endOf('month').format('YYYY-MM-DD')
+
   const user = useAuthStore((state) => state.user)
   const [charges, setCharges] = useState(0)
   const [collections, setCollections] = useState(0)
@@ -18,10 +21,10 @@ export default function DashboardPage() {
   useEffect(() => {
     const init = async () => {
       setCharges(
-        await getCharges('2023-01-20', '2024-10-20', user?.type)
+        await getAverageCharges(startDate, endDate, user?.type)
       )
       setCollections(
-        await getCollection('2023-01-20', '2024-10-20', user?.id)
+        await getCollection(startDate, endDate, user?.id)
       )
     }
 
