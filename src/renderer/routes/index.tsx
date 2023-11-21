@@ -15,13 +15,14 @@ import CollectionsEditPage from "@/pages/collections/edit"
 import ActionsProfilePage from "@/pages/actions/profile"
 import RegisterPage from "@/pages/register"
 import ActionsTransactionsPage from "@/pages/actions/transactions"
+import ReportsCollectionPage from "@/pages/reports/collection"
 
 export default createMemoryRouter([
   { path: "/login",  element: <LoginPage /> },
   { path: "/register",  element: <RegisterPage /> },
   { path: "/",  element: <AuthGuard element={<DashboardPage />} /> },
 
-  { path: "/reports/collection",  element: <AuthGuard element={<DashboardPage />} /> },
+  { path: "/reports/collection",  element: <AuthGuard element={<ReportsCollectionPage />} /> },
 
   { path: "/actions/pay",  element: <AuthGuard element={<ActionsPayPage />} /> },
   { path: "/actions/profile",  element: <AuthGuard element={<ActionsProfilePage />} /> },

@@ -32,7 +32,6 @@ export default function CollectionsIndexPage() {
     }, page)
 
     if (data) {
-      console.log(data)
       setCollections(data)
     }
   }

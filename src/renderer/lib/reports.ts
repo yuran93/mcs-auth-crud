@@ -48,3 +48,22 @@ export async function getCollection(start: any, end: any, userId: number|undefin
 
   return 0
 }
+
+export async function getCollectionData(start: any, end: any, type?: string|undefined) {
+  const { query } = useDatabase()
+
+  const records = await query(
+    `select
+    Users.id as user_id,
+    Users.name as user_name,
+    Users.type as user_type,
+    sum(Collections.amount) as amount
+    from Users
+    left join Collections on Collections.UserId = Users.id
+    where Users.type = "${type}"
+    and Collections.date between "${start}" and "${end}"
+    group by Users.id`
+  )
+
+  return records ? records : []
+}

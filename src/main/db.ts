@@ -3,8 +3,8 @@ import { Sequelize, DataTypes } from 'sequelize'
 import sqlite3 from 'sqlite3'
 import path from 'path'
 
-// const userDataPath = app.getPath('userData')
-const userDataPath = '/Users/yuran/Desktop'
+const userDataPath = app.getPath('userData')
+// const userDataPath = '/Users/yuran/Desktop'
 const databasePath = path.join(userDataPath, 'mcs_database.sqlite')
 
 export const sequelize = new Sequelize({

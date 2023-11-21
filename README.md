@@ -14,4 +14,8 @@ To generate executables for all platforms run following.
 npm run package-all
 ```
 
+## Default Admin Credentials
+Username: `admin@admin.com`
+Password: `password`
+
 Note: Executables can be found on `release/build` folder
